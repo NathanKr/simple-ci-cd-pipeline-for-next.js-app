@@ -47,19 +47,30 @@ i all ready have a solution for a simple CI\CD workflow which uses Github action
 <ul>
   <li>Next.js TypeScript project</li>
   <li>Vitest</li>
+  <li>.env.local</li>
 </ul>
 
 <h3>CI\CD</h3>
 <ul>
   <li>GitHub Actions</li>
+  <li>GitHub</li>
   <li>Act</li>
 </ul>
 
 
 <h2>Design</h2>
-....
 
+<h3>The chalange<h3>
+I want the workflow to support .env.local file. It is supported by next.js out of the box in development mode and if you use vercel you need to load the content of .env.local to your project on vercel. But here i dont use vercel and its not development so what to do ??
 
+<h3>Does next.js load local .env.local on production ?<h3>
+The answer is yes if you invoke npm start , you can check this locally.
+
+<h3>bad solution<h3>
+next.js can load the .env.local file if it exist on the production server. But how he get there ? .env.local appears in .gitignore and you do do not to remove it from there and expose it. This for sure is not recommended if the repo is public but even if the repo is private it is good practice to keep .env.local in .gitignore anyway
+
+<h3>good solution<h3>
+keep the content of the .env.local as github action secret variable and create the .env.local by the workflow 
 
 <h2>Code Structure</h2>
 ....

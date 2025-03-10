@@ -84,6 +84,13 @@ jobs:
       - name: Move NEW_WORKING_FOLDER to WORKING_FOLDER
         run: ssh $USER@$VPS_IP "mv $NEW_WORKING_FOLDER $WORKING_FOLDER"  # Move the new working folder to the working folder on the VPS
 
+      - name: Create .env.local on VPS
+        run: |
+          ssh $USER@$VPS_IP "
+            echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $WORKING_FOLDER/.env.local
+          "
+
+
       - name: Restart application with PM2
         run: | 
           ssh $USER@$VPS_IP "
