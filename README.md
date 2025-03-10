@@ -22,7 +22,7 @@ simply copy the workflow file from <a href='https://github.com/NathanKr/simple-g
 <ul>
   <li>Next.js TypeScript project</li>
   <li>Nginx</li>
-  <li>Domain \ https <li>
+  <li>Domain \ https ???<li>
   <li>GitHub Actions</li>
   <li>Linux on VPS - Ubuntu</li>
   <li>Digital Ocean - VPS provider via droplet</li>
