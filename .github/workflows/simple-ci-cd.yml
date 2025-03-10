@@ -3,7 +3,7 @@ name: Simple GitHub Actions CI/CD Pipeline
 on:
   push:
     branches:
-      - main-to-nath-bring-back #todo nath change back to main after working
+      - main #main-to-nath-bring-back #todo nath change back to main after working
 
 jobs:
   ci-cd:
