@@ -22,7 +22,7 @@ i all ready have a solution for a simple CI\CD workflow which uses Github action
 <ul>
 <li>copy the workflow file from <a href='#ref1'>[1]</a></li>
 <li>set VPS_IP ip and VPS_CICD_PRIVATE_KEY in the repo secrets part as in <a href='#ref1'>[1]</a></li>
-<li>tweak simple-ci-cd.yml :    runs-on: ubuntu-latest to fit production server</li>
+<li>tweak runs-on to fit your production server operating system version (change from ubuntu-latest to ubuntu-24.04 which best match y production server version which is ubuntu 24.10</li>
 <li>load .env.local</li>
 </ul>
 

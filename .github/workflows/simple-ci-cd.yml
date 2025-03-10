@@ -3,11 +3,11 @@ name: Simple GitHub Actions CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - main-to-nath-bring-back #todo nath change back to main after working
 
 jobs:
   ci-cd:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 #my production server is 24.10 so i prefer ubuntu-24.04 over ubuntu-latest
 
     env:
       USER: cicd
