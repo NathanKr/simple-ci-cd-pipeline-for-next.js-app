@@ -66,14 +66,23 @@ I want the workflow to support .env.local file. It is supported by next.js out o
 <h3>Does next.js load local .env.local on production ?<h3>
 The answer is yes if you invoke npm start , you can check this locally.
 
-<h3>bad solution<h3>
+<h3>Bad solution<h3>
 next.js can load the .env.local file if it exist on the production server. But how he get there ? .env.local appears in .gitignore and you do do not to remove it from there and expose it. This for sure is not recommended if the repo is public but even if the repo is private it is good practice to keep .env.local in .gitignore anyway
 
-<h3>good solution<h3>
-keep the content of the .env.local as github action secret variable and create the .env.local by the workflow 
+<h3>Good solution<h3>
+keep the content of the .env.local as github action secret variable and create the .env.local by the workflow
+
+
 
 <h2>Code Structure</h2>
-....
+
+```yml
+    - name: Create .env.local on VPS
+      run: |
+        ssh $USER@$VPS_IP "
+          echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $WORKING_FOLDER/.env.local
+        "
+```
 
 <h2>Demo</h2>
 ....
