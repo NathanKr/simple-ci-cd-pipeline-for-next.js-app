@@ -85,10 +85,11 @@ set -e
 ```
 
 <h3>long npm install in ssh chalange</h3>
+1)
       - name: SSH into VPS and run script
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=30 user@your-vps "your-long-running-command"
-
+2)or may be simply use pnpm
 
 <h2>Code Structure</h2>
 
