@@ -89,7 +89,7 @@ set -e
       - name: SSH into VPS and run script
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=30 user@your-vps "your-long-running-command"
-2)or may be simply use pnpm
+2)or may be simply use pnpm ---> but need to install it
 
 <h2>Code Structure</h2>
 
