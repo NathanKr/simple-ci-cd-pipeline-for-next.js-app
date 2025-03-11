@@ -65,13 +65,28 @@ jobs:
 
       - name: Stop application with PM2 (if running)
         run: |
-          ssh $USER@$VPS_IP "
-            if npx pm2 list | grep -q '${{ env.APP_NAME }}'; then
-              npx pm2 stop '${{ env.APP_NAME }}';
+          ssh "$USER@$VPS_IP" '
+            set +e # disables the behavior, allowing the script to continue executing even if a command returns a non-zero exit code
+            npx pm2 list | grep  "${{ env.APP_NAME }}" 
+            EXIT_CODE=$?
+            set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
+            if [ $EXIT_CODE -eq 0 ]; then
+              npx pm2 stop "${{ env.APP_NAME }}"
+              echo "Process ${{ env.APP_NAME }} stopped."
             else
-              echo 'PM2 process not found, skipping stop command.'
+              echo "Process ${{ env.APP_NAME }} not found, skipping stop command."
             fi
-          "
+          '
+
+      # - name: Stop application with PM2 (if running)
+      #   run: |
+      #     ssh $USER@$VPS_IP "
+      #       if npx pm2 list | grep -q '${{ env.APP_NAME }}'; then
+      #         npx pm2 stop '${{ env.APP_NAME }}';
+      #       else
+      #         echo 'PM2 process not found, skipping stop command.'
+      #       fi
+      #     "
 
 
       - name: Move WORKING_FOLDER to OLD_WORKING_FOLDER
@@ -89,15 +104,34 @@ jobs:
             echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $WORKING_FOLDER/.env.local
           "
 
+
       - name: Restart application with PM2
-        run: | 
+        run: |
           ssh $USER@$VPS_IP "
-            if npx pm2 list | grep -q '${{ env.APP_NAME }}'; then
+            cd $WORKING_FOLDER
+            set +e # disables the behavior, allowing the script to continue executing even if a command returns a non-zero exit code
+            npx pm2 list | grep  '${{ env.APP_NAME }}' 
+            EXIT_CODE=$?
+            set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
+            if [ $EXIT_CODE -eq 0 ]; then
               npx pm2 restart '${{ env.APP_NAME }}';
+              echo "Process ${{ env.APP_NAME }} found so restart."
             else
-              cd $WORKING_FOLDER && npx pm2 start npm --name '${{ env.APP_NAME }}' -- run start;
+              npx pm2 start npm --name '${{ env.APP_NAME }}' -- run start;
+              echo "Process ${{ env.APP_NAME }} not found so start."
             fi
-            npx pm2 save
+            npx pm2 save --force
           "
+
+      # - name: Restart application with PM2
+      #   run: | 
+      #     ssh $USER@$VPS_IP "
+      #       if npx pm2 list | grep -q '${{ env.APP_NAME }}'; then
+      #         npx pm2 restart '${{ env.APP_NAME }}';
+      #       else
+      #         cd $WORKING_FOLDER && npx pm2 start npm --name '${{ env.APP_NAME }}' -- run start;
+      #       fi
+      #       npx pm2 save
+      #     "
 
 
