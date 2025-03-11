@@ -1,9 +1,10 @@
 name: Simple GitHub Actions CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - main #main-to-nath-bring-back #todo nath change back to main after working
+  workflow_dispatch: #todo nath remove and uncomment next 3 lines
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   ci-cd:
