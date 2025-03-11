@@ -60,7 +60,8 @@ i all ready have a solution for a simple CI\CD workflow which uses Github action
 
 <h2>Design</h2>
 
-<h3>The chalange</h3>
+<h3>.env.local chalange</h3>
+
 I want the workflow to support .env.local file. It is supported by next.js out of the box in development mode and if you use vercel you need to load the content of .env.local to your project on vercel. But here i dont use vercel and its not development so what to do ??
 
 <h3>Does next.js load local .env.local on production ?</h3>
@@ -72,6 +73,21 @@ next.js can load the .env.local file if it exist on the production server. But h
 <h3>Good solution</h3>
 keep the content of the .env.local as github action secret variable and create the .env.local by the workflow
 
+
+<h3>grep non zero exit code chalange</h3>
+
+```yml
+
+set +e
+...
+set -e
+
+```
+
+<h3>long npm install in ssh chalange</h3>
+      - name: SSH into VPS and run script
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=30 user@your-vps "your-long-running-command"
 
 
 <h2>Code Structure</h2>
