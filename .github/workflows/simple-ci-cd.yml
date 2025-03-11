@@ -53,7 +53,7 @@ jobs:
             ssh $USER@$VPS_IP "rm $GITHUB_TOKEN_FILE"
 
       - name: Install dependencies on VPS
-        run: ssh $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && npm install"  # Install dependencies using npm on the VPS
+        run: ssh -v $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && npm install"  # Install dependencies using npm on the VPS
     
 
       - name: Run tests on VPS
