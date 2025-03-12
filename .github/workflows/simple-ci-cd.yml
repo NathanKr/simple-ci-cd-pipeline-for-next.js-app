@@ -25,6 +25,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check branch
+        run: |
+          if [[ "${GITHUB_REF#refs/heads/}" == "main" ]]; then
+            echo "Direct push to main branch detected."
+            echo "Please use pull requests for changes to main."
+            exit 1
+          fi
+
       - name: Configure SSH (on GitHub Actions runner)
         run: |
             mkdir -p ~/.ssh
