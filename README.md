@@ -100,8 +100,8 @@ set -e
 
 <h2>Points of Interest</h2>
 <ul>
-    <li>on: workflow_dispatch  --> may be usefull during workflow development for manuall workflow run </li>
-    <li>sharp issues on ubuntue --> unoptimized: truep</li>
+    <li>on: workflow_dispatch  --> may be usefull during workflow development for manuall workflow run . go to workflow file on github. click 'View Runs' and then click 'Run workflow'</li>
+    <li>sharp issues on ubuntue --> unoptimized: true</li>
    
 </ul>
 
