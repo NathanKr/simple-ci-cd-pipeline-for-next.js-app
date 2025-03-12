@@ -12,8 +12,103 @@ i all ready have a solution for a simple CI\CD workflow which uses Github action
 <h2>Installation</h2>
 
 <h3>Production server</h3>
-- configure nginx
-- setup domain and http
+<h4>make pm2 global (one point of truth)</h4>
+
+1. Install pm2 Globally as Root
+Ensure Node.js and npm are installed:
+
+```bash
+node -v
+npm -v
+```
+
+Install pm2 globally:
+
+```bash
+sudo npm install -g pm2
+```
+
+Verify installation:
+
+```bash
+pm2 -v
+```
+
+2. Ensure Non-Root User Can Access pm2
+Log in as the Non-Root User:
+
+If you're currently logged in as root, switch to the non-root user:
+
+```bash
+su - <non-root-username>
+```
+
+Add /usr/local/bin (or wherever global npm binaries are installed , verify with 'npm config get prefix') to the non-root user's PATH:
+
+```bash
+echo 'export PATH=/usr/local/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc # reload changes immediately
+```
+
+Confirm the non-root user can invoke pm2:
+
+```bash
+su - <non-root-username>
+pm2 -v
+```
+
+3. Grant Write Access to PM2 Files
+Change ownership of pm2 directories to the non-root user:
+
+```bash
+sudo chown -R <non-root-username>:<non-root-username> /home/<non-root-username>/.pm2
+```
+
+Verify that the .pm2 directory for the user exists:
+
+```bash
+ls -l /home/<non-root-username>/.pm2
+```
+
+4. Test PM2 Commands as Non-Root User
+
+```bash
+su - <non-root-username>
+```
+
+Start an application (e.g., app.js):
+
+```bash
+pm2 start app.js --name "my-app"
+pm2 list
+```
+
+5. Configure CI/CD Pipeline to Use Non-Root User
+
+Update your CI/CD pipeline's ssh commands to switch to the non-root user. For example:
+
+```bash
+ssh non-root-user@VPS_IP "pm2 restart my-app"
+```
+
+6. Set Up Autostart for PM2 (Optional for Production), need to be invoked once
+While logged in as the non-root user, configure autostart for the system:
+
+```bash
+pm2 startup
+```
+
+Follow the generated instructions, which may include running a sudo command to finalize the setup.
+
+7. Save PM2 Processes (Optional)
+Save the current list of processes so they can be restored after a reboot:
+
+```bash
+pm2 save
+```
+
+<h4>configure nginx</h4>
+<h4>setup domain and http</h4>
 
 <h3>Development</h3>
 
