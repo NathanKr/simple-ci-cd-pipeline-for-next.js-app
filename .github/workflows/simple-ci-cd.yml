@@ -55,7 +55,7 @@ jobs:
 
             
       - name: Install dependencies on VPS
-        run: ssh -v $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && rm -rf node_modules && npm install  --verbose"  # Install dependencies using npm on the VPS
+        run: ssh $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && rm -rf node_modules && npm install"  # Install dependencies using npm on the VPS
     
 
       - name: Run tests on VPS

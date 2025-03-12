@@ -116,6 +116,8 @@ pm2 save
 ```
 
 <h4>configure nginx</h4>
+
+
 <h4>setup domain and http</h4>
 
 <h3>Development</h3>
