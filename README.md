@@ -84,12 +84,6 @@ set -e
 
 ```
 
-<h3>long npm install in ssh chalange</h3>
-1)
-      - name: SSH into VPS and run script
-        run: |
-          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=30 user@your-vps "your-long-running-command"
-2)or may be simply use pnpm ---> but need to install it
 
 <h2>Code Structure</h2>
 
@@ -106,7 +100,8 @@ set -e
 
 <h2>Points of Interest</h2>
 <ul>
-    <li>...</li>
+    <li>on: workflow_dispatch  --> may be usefull during workflow development for manuall workflow run </li>
+    <li>sharp issues on ubuntue --> unoptimized: truep</li>
    
 </ul>
 
