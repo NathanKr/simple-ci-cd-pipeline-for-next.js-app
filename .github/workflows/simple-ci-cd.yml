@@ -73,8 +73,7 @@ jobs:
             pm2 list | grep  "${{ env.APP_NAME }}" 
             EXIT_CODE=$?
             set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
-            if [ $EXIT_CODE -eq 0 ]
-            then
+            if [ $EXIT_CODE -eq 0 ]; then
               pm2 stop "${{ env.APP_NAME }}"
               echo "Process ${{ env.APP_NAME }} stopped."
             else
@@ -86,8 +85,7 @@ jobs:
 
       - name: Move WORKING_FOLDER to OLD_WORKING_FOLDER
         run: ssh $USER@$VPS_IP "
-          if [ -d $WORKING_FOLDER ]
-          then
+          if [ -d $WORKING_FOLDER ]; then
             mv $WORKING_FOLDER $OLD_WORKING_FOLDER;
           fi"
         
@@ -109,8 +107,7 @@ jobs:
             pm2 list | grep  '${{ env.APP_NAME }}' 
             EXIT_CODE=$?
             set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
-            if [ $EXIT_CODE -eq 0 ] 
-            then
+            if [ $EXIT_CODE -eq 0 ]; then
               pm2 restart '${{ env.APP_NAME }}';
               echo "Process ${{ env.APP_NAME }} found so restart."
             else
