@@ -1,5 +1,5 @@
 name: Simple GitHub Actions CI/CD Pipeline
- 
+  
 on:
   push:
     branches:
