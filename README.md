@@ -82,6 +82,7 @@ Start an application (e.g., app.js):
 pm2 start app.js --name "my-app"
 pm2 list
 ```
+you canalso use shell command e.g. ls instead of app.js
 
 5. Configure CI/CD Pipeline to Use Non-Root User
 
@@ -99,6 +100,13 @@ pm2 startup
 ```
 
 Follow the generated instructions, which may include running a sudo command to finalize the setup.
+
+
+Once done you can check the status as follows
+```bash
+sudo systemctl status pm2-<non-root-username>
+```
+
 
 7. Save PM2 Processes (Optional)
 Save the current list of processes so they can be restored after a reboot:
