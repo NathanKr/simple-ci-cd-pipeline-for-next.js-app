@@ -86,9 +86,9 @@ jobs:
 
       - name: Move WORKING_FOLDER to OLD_WORKING_FOLDER
         run: ssh $USER@$VPS_IP "
-          if [ -d '$WORKING_FOLDER' ]
+          if [ -d $WORKING_FOLDER ]
           then
-            mv '$WORKING_FOLDER' '$OLD_WORKING_FOLDER';
+            mv $WORKING_FOLDER $OLD_WORKING_FOLDER;
           fi"
         
       - name: Move NEW_WORKING_FOLDER to WORKING_FOLDER
