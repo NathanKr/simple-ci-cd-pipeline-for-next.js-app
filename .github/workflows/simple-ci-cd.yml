@@ -55,7 +55,7 @@ jobs:
 
             
       - name: Install dependencies on VPS
-        run: ssh -v $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && rm -rf node_modules && npm install"  # Install dependencies using npm on the VPS
+        run: ssh -v $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && rm -rf node_modules && npm install  --verbose"  # Install dependencies using npm on the VPS
     
 
       - name: Run tests on VPS
@@ -81,15 +81,6 @@ jobs:
             fi
           '
 
-      # - name: Stop application with PM2 (if running)
-      #   run: |
-      #     ssh $USER@$VPS_IP "
-      #       if npx pm2 list | grep -q '${{ env.APP_NAME }}'; then
-      #         npx pm2 stop '${{ env.APP_NAME }}';
-      #       else
-      #         echo 'PM2 process not found, skipping stop command.'
-      #       fi
-      #     "
 
 
       - name: Move WORKING_FOLDER to OLD_WORKING_FOLDER
@@ -126,15 +117,5 @@ jobs:
             npx pm2 save --force
           "
 
-      # - name: Restart application with PM2
-      #   run: | 
-      #     ssh $USER@$VPS_IP "
-      #       if npx pm2 list | grep -q '${{ env.APP_NAME }}'; then
-      #         npx pm2 restart '${{ env.APP_NAME }}';
-      #       else
-      #         cd $WORKING_FOLDER && npx pm2 start npm --name '${{ env.APP_NAME }}' -- run start;
-      #       fi
-      #       npx pm2 save
-      #     "
 
 
