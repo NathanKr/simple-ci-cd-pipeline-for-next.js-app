@@ -115,7 +115,46 @@ Save the current list of processes so they can be restored after a reboot:
 pm2 save
 ```
 
-<h4>configure nginx</h4>
+<h4>Configure Nginx</h4>
+<ol>
+  <li>
+    <strong>Create the file in your GitHub repository:</strong> Store the <code>my-app.conf</code> file in your project's root directory.
+    <pre>
+      <code>
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://localhost:3000; # Adjust port if needed
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+      </code>
+    </pre>
+  </li>
+  <li>
+    <strong>Move and link the file via SSH:</strong> In your GitHub Actions workflow, after the code is checked out, use <code>ssh</code> to execute the following commands on your DigitalOcean droplet:
+    <pre>
+      <code>
+sudo mv ./my-app.conf /etc/nginx/sites-available/my-app.conf
+sudo ln -sf /etc/nginx/sites-available/my-app.conf /etc/nginx/sites-enabled/my-app.conf
+      </code>
+    </pre>
+    <p>Note: <code>./my-app.conf</code> refers to the file in the root of your cloned repository.</p>
+  </li>
+  <li>
+    <strong>Reload Nginx:</strong> Immediately after the move and link commands, use <code>ssh</code> to reload the Nginx configuration:
+    <pre>
+      <code>
+sudo systemctl reload nginx
+      </code>
+    </pre>
+  </li>
+</ol>
 
 
 <h4>setup domain and http</h4>
