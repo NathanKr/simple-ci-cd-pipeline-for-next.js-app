@@ -66,7 +66,7 @@ jobs:
         run: ssh $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && NODE_ENV=production npm run build"  # Build the application using npm on the VPS
 
 
-      - name: Stop application with PM2 (if running)
+      - name: Stop and delete application with PM2 (if running)
         run: |
           ssh "$USER@$VPS_IP" '
             set +e # disables the behavior, allowing the script to continue executing even if a command returns a non-zero exit code
@@ -75,7 +75,8 @@ jobs:
             set -e  # enables the behavior where any command that returns a non-zero exit code will cause the script to exit immediately. 
             if [ $EXIT_CODE -eq 0 ]; then
               pm2 stop "${{ env.APP_NAME }}"
-              echo "Process ${{ env.APP_NAME }} stopped."
+              pm2 delete "${{ env.APP_NAME }}"
+              echo "Process ${{ env.APP_NAME }} stopped and deleted."
             else
               echo "Process ${{ env.APP_NAME }} not found, skipping stop command."
             fi
