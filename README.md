@@ -221,6 +221,11 @@ fi
 
 <h2>References</h2>
 <ul>
+    <li>the prev instand of the app is not deleted</li>
+</ul>    
+
+<h2>References</h2>
+<ul>
     <li id='ref1'><a href='https://youtu.be/sEBGmPZh75U?si=wUANX2Pu-Sk6iQxI'>Simplified CI/CD Workflow with GitHub Actions </a></li>
 </ul>
 
