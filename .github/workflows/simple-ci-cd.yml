@@ -77,6 +77,7 @@ jobs:
               pm2 stop "${{ env.APP_NAME }}"
               pm2 delete "${{ env.APP_NAME }}"
               echo "Process ${{ env.APP_NAME }} stopped and deleted."
+              pm2 save --force  # Save after deletion to ensure process list is up-to-date
             else
               echo "Process ${{ env.APP_NAME }} not found, skipping stop command."
             fi
