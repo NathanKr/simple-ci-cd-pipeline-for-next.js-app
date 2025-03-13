@@ -206,7 +206,23 @@ set -e
 <h2>Points of Interest</h2>
 <ul>
     <li>on: workflow_dispatch  --> may be usefull during workflow development for manuall workflow run . go to workflow file on github. click 'View Runs' and then click 'Run workflow'</li>
+    <li>push to main trigegr deploy, to protect this you can allow it only via pull request , this can be done via .git\hooks\pre-push (.git/hooks directory is not tracked by Git)
+
+```bash
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch_name" = "main" ]; then
+  echo "Direct pushes to the 'main' branch are not allowed. Please create a pull request."
+  exit 1
+fi
+```
+  </li>
 </ul>
+
+<h2>References</h2>
+<ul>
+    <li>the prev instand of the app is not deleted</li>
+</ul>    
 
 <h2>References</h2>
 <ul>

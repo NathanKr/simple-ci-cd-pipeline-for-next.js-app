@@ -15,7 +15,7 @@ jobs:
       GITHUB_TOKEN_FILE: ~/github_token
       APP_NAME: ${{ github.event.repository.name }}  # Define the application name as the repository name
       WORKING_FOLDER: $HOME/${{ github.event.repository.name }}  # Define the working directory as ~/repo-name      
-      OLD_WORKING_FOLDER: $HOME/${{ github.event.repository.name }}_old_${{ github.run_number }} # Define the old working directory with run number
+      OLD_WORKING_FOLDER: $HOME/${{ github.event.repository.name }}/history/old_${{ github.run_number }}
       NEW_WORKING_FOLDER: $HOME/${{ github.event.repository.name }}_new_${{ github.run_number }} # Define the new working directory with run number
 
     steps:
@@ -86,6 +86,8 @@ jobs:
       - name: Move WORKING_FOLDER to OLD_WORKING_FOLDER
         run: ssh $USER@$VPS_IP "
           if [ -d $WORKING_FOLDER ]; then
+            rm -rf $WORKING_FOLDER/node_modules;
+            mkdir -p ${WORKING_FOLDER}/history;
             mv $WORKING_FOLDER $OLD_WORKING_FOLDER;
           fi"
         
