@@ -156,48 +156,41 @@ sudo systemctl reload nginx
   </li>
 </ul>
 
-<!-- <h4>Configure Nginx</h4>
+
+<h4>setup domain in digital ocean droplet</h4>
 <ol>
-  <li>
-    <strong>Create the file in your GitHub repository:</strong> Store the <code>my-app.conf</code> file in your project's root directory.
-    <pre>
-      <code>
-server {
-    listen 80;
+<li>purchase a domain</li>
+<li>add the domain to digital ocean .navigate to mangae->networking->domains 
+Enter domain - posttoyoutube.xyx, choose project - post 2 youtube and click 'Add domain' 
+<img src='./figs/add-domain-to-do-droplet.png'/>
+</li>
+<li>create droplet :
+hostname : @
+will direct to : add here your doplet
+click on the button create record
 
-    location / {
-        proxy_pass http://localhost:3000; # Adjust port if needed
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-      </code>
-    </pre>
-  </li>
-  <li>
-    <strong>Move and link the file via SSH:</strong> In your GitHub Actions workflow, after the code is checked out, use <code>ssh</code> to execute the following commands on your DigitalOcean droplet:
-    <pre>
-      <code>
-sudo mv ./config/nginx/my-app.conf /etc/nginx/sites-available/my-app.conf
-sudo ln -sf /etc/nginx/sites-available/my-app.conf /etc/nginx/sites-enabled/my-app.conf      </code>
-    </pre>
-    <p>Note: <code>./my-app.conf</code> refers to the file in the root of your cloned repository.</p>
-  </li>
-  <li>
-    <strong>Reload Nginx:</strong> Immediately after the move and link commands, use <code>ssh</code> to reload the Nginx configuration:
-    <pre>
-      <code>
-sudo systemctl reload nginx
-      </code>
-    </pre>
-  </li>
-</ol> -->
+as shown in the following image
+<img src='./figs/create-record.png'/>
 
+create also record for hostname www with the same 'will direct to'
 
-<h4>setup domain and http</h4>
+the resulted created records appear in the follwoing image where the @ record appears in brown and www record appears in blue 
+<img src='./figs/created-records.png'/>
+</li>
+</ol>
+
+<h4>setup domain in namecheap</h4>
+Here we will tell namecheap about digital ocean
+from the dashboard choose the domain post2youtube.xyz and click Manage
+scroll down and for Nameservers choose "custom DNS' and enter what was written in digitl ocean : ns1.digitalocean.com. ns2.digitalocean.com. ns3.digitalocean.com. as follows
+
+<img  src='./figs/nameservers-on-namechaep.png'/>
+
+This might take time to tkae effect
+
+if you try to access it immidiately you might not be able to see the page
+
+<img src='./figs/page-can-not-be-displayed.png'/>
 
 <h3>Development</h3>
 
@@ -207,7 +200,13 @@ sudo systemctl reload nginx
 <li>copy the workflow file from <a href='#ref1'>[1]</a></li>
 <li>set VPS_IP ip and VPS_CICD_PRIVATE_KEY in the repo secrets part as in <a href='#ref1'>[1]</a></li>
 <li>tweak runs-on to fit your production server operating system version (change from ubuntu-latest to ubuntu-24.04 which best match y production server version which is ubuntu 24.10</li>
-<li>load .env.production</li>
+<li>.env.production : tweak the workflow file to load the env variables ,currently we have
+
+```yml
+      echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $NEW_WORKING_FOLDER/.env.production
+```
+
+</li>
 </ul>
 
 
@@ -300,10 +299,6 @@ fi
   </li>
 </ul>
 
-<h2>References</h2>
-<ul>
-    <li>the prev instand of the app is not deleted</li>
-</ul>    
 
 <h2>References</h2>
 <ul>
