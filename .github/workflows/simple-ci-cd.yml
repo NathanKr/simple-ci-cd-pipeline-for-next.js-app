@@ -62,7 +62,7 @@ jobs:
         run: ssh $USER@$VPS_IP "cd $NEW_WORKING_FOLDER && npm run test -- --run"  # Run tests in non-watch mode on the VPS
     
 
-      - name: Create .env.local on VPS # should be before build because maybe will use them
+      - name: Create .env.production on VPS # should be before build because maybe will use them
         run: |
           ssh $USER@$VPS_IP "
             echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $WORKING_FOLDER/.env.production
