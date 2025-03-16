@@ -210,13 +210,13 @@ add     server_name post2youtube.xyz www.post2youtube.xyz; under server {
   sudo nginx -t # test configuration
   sudo systemctl reload nginx # reload Nginx to apply changes:
     ```
----------->it is not working because the default nginx get inthe way so i romve the symbolic link 
+---------->it is not working because the default nginx get in the way so i reomve the symbolic link 
 
 ```bash
 sudo rm /etc/nginx/sites-enabled/default
 
 ```
-but it still exist in /etc/nginx/sites-available/
+but it still exist in /etc/nginx/sites-available/ (yet not active because link removed from sites-enabled)
 
 after this
 
@@ -225,7 +225,79 @@ sudo nginx -t  # Test the configuration for syntax errors
 sudo systemctl reload nginx
 ```
 
-now access http://post2youtube.xyz will access the next.js app without need for the port
+now access http://post2youtube.xyz will access the next.js app without need for the port but still the connection is not secured because http is used - not https
+
+<h4>now i want to access next.js app without 'Not Secure' -> need https and certificate</h4>
+    <strong>1. Install Certbot</strong>
+    <ul>
+        <li>Update the package list:
+            <pre><code>sudo apt update</code></pre>
+        </li>
+        <li>Install Certbot and the Nginx plugin:
+            <pre><code>sudo apt install certbot python3-certbot-nginx</code></pre>
+        </li>
+    </ul>
+
+  <strong>2. Obtain an SSL Certificate</strong>
+    <ul>
+        <li>Run Certbot to get a certificate and configure Nginx:
+            <pre><code>sudo certbot --nginx -d post2youtube.xyz -d www.post2youtube.xyz</code></pre>
+        </li>
+        <li>Certbot will automatically configure SSL and set up redirection.</li>
+    </ul>
+
+  <strong>3. Verify Certificate Renewal</strong>
+    <ul>
+        <li>Test automatic renewal:
+            <pre><code>sudo certbot renew --dry-run</code></pre>
+        </li>
+    </ul>
+
+  <strong>4. Review Nginx Configuration</strong>
+    <p>The Nginx configuration file will look like this:</p>
+    <pre><code>
+server {
+    listen 80;
+    server_name post2youtube.xyz www.post2youtube.xyz;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name post2youtube.xyz www.post2youtube.xyz;
+
+    ssl_certificate /etc/letsencrypt/live/post2youtube.xyz/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/post2youtube.xyz/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+    </code></pre>
+
+  <strong>5. Restart Nginx</strong>
+    <ul>
+        <li>Test and reload Nginx:
+            <pre><code>
+sudo nginx -t
+sudo systemctl reload nginx
+            </code></pre>
+        </li>
+    </ul>
+
+  <strong>6. Verify HTTPS</strong>
+    <ul>
+        <li>Visit: <a href="https://post2youtube.xyz" target="_blank">https://post2youtube.xyz</a></li>
+        <li>Ensure your site is accessible over HTTPS.</li>
+    </ul>
+
 
 <h3>Development</h3>
 
