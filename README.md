@@ -192,6 +192,41 @@ if you try to access it immidiately you might not be able to see the page
 
 <img src='./figs/page-can-not-be-displayed.png'/>
 
+
+but after few minutes you will getthe default nginx page but with the correct domain post2youtube.xyz 
+
+<img src='./figs/with-domain-show-default-nginx-page.png'/>
+
+you can can access the next.js app using the domain but still need the 3000 port 
+
+<img src='./figs/use-domain-but-still-need-port-for-next.js'/>
+
+
+<h4>now i want to access next.js app without port</h4>
+add     server_name post2youtube.xyz www.post2youtube.xyz; under server {
+    listen 80; in config/nginx/my-app.conf
+
+    ```bash
+  sudo nginx -t # test configuration
+  sudo systemctl reload nginx # reload Nginx to apply changes:
+    ```
+---------->it is not working because the default nginx get inthe way so i romve the symbolic link 
+
+```bash
+sudo rm /etc/nginx/sites-enabled/default
+
+```
+but it still exist in /etc/nginx/sites-available/
+
+after this
+
+```bash
+sudo nginx -t  # Test the configuration for syntax errors
+sudo systemctl reload nginx
+```
+
+now access http://post2youtube.xyz will access the next.js app without need for the port
+
 <h3>Development</h3>
 
 
