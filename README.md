@@ -288,6 +288,8 @@ set -e
     <li>push to main trigegr deploy, to protect this you can allow it only via pull request , this can be done via .git\hooks\pre-push (.git/hooks directory is not tracked by Git)
 
 ```bash
+#!/bin/bash
+
 branch_name=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$branch_name" = "main" ]; then
