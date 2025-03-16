@@ -207,7 +207,7 @@ sudo systemctl reload nginx
 <li>copy the workflow file from <a href='#ref1'>[1]</a></li>
 <li>set VPS_IP ip and VPS_CICD_PRIVATE_KEY in the repo secrets part as in <a href='#ref1'>[1]</a></li>
 <li>tweak runs-on to fit your production server operating system version (change from ubuntu-latest to ubuntu-24.04 which best match y production server version which is ubuntu 24.10</li>
-<li>load .env.local</li>
+<li>load .env.production</li>
 </ul>
 
 
@@ -231,7 +231,7 @@ sudo systemctl reload nginx
 <ul>
   <li>Next.js TypeScript project</li>
   <li>Vitest</li>
-  <li>.env.local</li>
+  <li>.env.production</li>
 </ul>
 
 <h3>CI\CD</h3>
@@ -244,18 +244,18 @@ sudo systemctl reload nginx
 
 <h2>Design</h2>
 
-<h3>.env.local chalange</h3>
+<h3>.env.production chalange</h3>
 
 I want the workflow to support .env.local file. It is supported by next.js out of the box in development mode and if you use vercel you need to load the content of .env.local to your project on vercel. But here i dont use vercel and its not development so what to do ??
 
 <h3>Does next.js load local .env.local on production ?</h3>
-The answer is yes if you invoke npm start , you can check this locally.
+The answer is no , but it load .env.production.
 
 <h3>Bad solution</h3>
-next.js can load the .env.local file if it exist on the production server. But how he get there ? .env.local appears in .gitignore and you do do not to remove it from there and expose it. This for sure is not recommended if the repo is public but even if the repo is private it is good practice to keep .env.local in .gitignore anyway
+next.js can load the .env.production file if it exist on the production server. But how he get there ? .env.local appears in .gitignore and you do want to remove it from there and expose it. This for sure is not recommended if the repo is public but even if the repo is private it is good practice to keep .env.local in .gitignore anyway
 
 <h3>Good solution</h3>
-keep the content of the .env.local as github action secret variable and create the .env.local by the workflow
+keep the content of the .env.production as github action secret variable and create the .env.production by the workflow
 
 
 <h3>grep non zero exit code chalange</h3>
@@ -272,10 +272,10 @@ set -e
 <h2>Code Structure</h2>
 
 ```yml
-    - name: Create .env.local on VPS
+    - name: Create .env.production on VPS
       run: |
         ssh $USER@$VPS_IP "
-          echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $WORKING_FOLDER/.env.local
+          echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $WORKING_FOLDER/.env.production
         "
 ```
 
