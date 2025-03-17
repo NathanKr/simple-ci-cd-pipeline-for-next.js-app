@@ -12,7 +12,7 @@ i all ready have a solution for a simple CI\CD workflow which uses Github action
 <h2>Installation</h2>
 
 <h3>Production server</h3>
-check <a href='https://github.com/NathanKr/setup-digital-ocean-droplet-for-next.js-app-deployment'>setup-digital-ocean-droplet-for-next.js-app-deployment</a>
+check <a href='#ref2'>[2]</a>
 
 
 <h3>Development</h3>
@@ -42,7 +42,8 @@ check <a href='https://github.com/NathanKr/setup-digital-ocean-droplet-for-next.
 <h3>Production server</h3>
 <ul>
   <li>Nginx</li>
-  <li>Domain \ https ???<li>
+  <li>Domain</li>
+  <li>https</li>
   <li>Linux on VPS - Ubuntu</li>
   <li>Digital Ocean - VPS provider via droplet</li>
   <li>PM2</li>
@@ -53,7 +54,7 @@ check <a href='https://github.com/NathanKr/setup-digital-ocean-droplet-for-next.
 <ul>
   <li>Next.js TypeScript project</li>
   <li>Vitest</li>
-  <li>.env.production</li>
+  <li>environment variables</li>
 </ul>
 
 <h3>CI\CD</h3>
@@ -66,7 +67,7 @@ check <a href='https://github.com/NathanKr/setup-digital-ocean-droplet-for-next.
 
 <h2>Design</h2>
 
-<h3>.env.production chalange</h3>
+<h3>environment variables chalange</h3>
 
 I want the workflow to support .env.local file. It is supported by next.js out of the box in development mode and if you use vercel you need to load the content of .env.local to your project on vercel. But here i dont use vercel and its not development so what to do ??
 
@@ -124,7 +125,8 @@ fi
 
 
 <h2>References</h2>
-<ul>
+<ol>
     <li id='ref1'><a href='https://youtu.be/sEBGmPZh75U?si=wUANX2Pu-Sk6iQxI'>Simplified CI/CD Workflow with GitHub Actions </a></li>
-</ul>
+    <li id='ref2'><a href='https://youtu.be/yzbyCWkbcZA?si=_ftdj0fWMoGubTKI'> Deploy Next.js Application on DigitalOcean Droplet</a></li>
+</ol>
 
