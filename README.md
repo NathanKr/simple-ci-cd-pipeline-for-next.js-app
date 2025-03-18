@@ -82,6 +82,7 @@ keep the content of the .env.production as github action secret variable and cre
 
 
 <h3>grep non zero exit code chalange</h3>
+Use
 
 ```yml
 
@@ -91,6 +92,7 @@ set -e
 
 ```
 
+More info in <a href='#ref3'>[3]</a>
 
 <h2>Code Structure</h2>
 
@@ -127,6 +129,7 @@ fi
 <h2>References</h2>
 <ol>
     <li id='ref1'><a href='https://youtu.be/sEBGmPZh75U?si=wUANX2Pu-Sk6iQxI'>Simplified CI/CD Workflow with GitHub Actions </a></li>
-    <li id='ref2'><a href='https://youtu.be/yzbyCWkbcZA?si=_ftdj0fWMoGubTKI'> Deploy Next.js Application on DigitalOcean Droplet</a></li>
+    <li id='ref2'><a href='https://youtu.be/yzbyCWkbcZA?si=_ftdj0fWMoGubTKI'>Deploy Next.js Application on DigitalOcean Droplet</a></li>
+    <li id='ref3'><a href='https://youtu.be/ek8K3GLcrm4?si=ota-sa_lVReZTuyY'> Handling Non-Zero Exit Codes in GitHub Actions </a></li>
 </ol>
 
