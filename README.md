@@ -7,7 +7,7 @@ Deploy next.js app on a VPS using github actions workflow
 This repository provides a simple workflow file to deploy your Next.js application to a VPS when pushing to the main branch. I use a DigitalOcean Droplet as the VPS, but the workflow is compatible with other types of VPS as well
 
 <h2>Motivation</h2>
-I already have a solution for a simple CI\CD workflow which uses Github actions check <a href='#ref1'>[1]</a> but i have not used it with next.js. So here we will do it
+I already have a simple CI/CD workflow using GitHub Actions (<a href='#ref1'>[1]</a>), but I haven't applied it to a Next.js project yet. This guide demonstrates how to do that
 
 <h2>Installation</h2>
 
@@ -16,7 +16,7 @@ You need to setup the production server once as pre condition for success workfl
 
 
 
-<h3>CI\CD</h3>
+<h3>CI/CD</h3>
 <ul>
 <li>set VPS_IP ip and VPS_CICD_PRIVATE_KEY in the repo secrets part as in <a href='#ref1'>[1]</a></li>
 <li>tweak <code>runs-on</code> to fit your production server operating system version (change from <code>ubuntu-latest</code> to <code>ubuntu-24.04</code> which best matches your production server version, which is Ubuntu 24.04)</li>
@@ -62,7 +62,7 @@ You need to setup the production server once as pre condition for success workfl
   <li>environment variables</li>
 </ul>
 
-<h3>CI\CD</h3>
+<h3>CI/CD</h3>
 <ul>
   <li>GitHub Actions</li>
   <li>GitHub</li>
@@ -95,7 +95,7 @@ set -e
 
 <h2>Code Structure</h2>
 
-The workflow file is based on the one in <a href='#ref1'>[1]</a> with minor changes:
+The workflow file - simple-ci-cd.yml is based on the one in <a href='#ref1'>[1]</a> with minor changes:
 
 <table> 
 <thead> 
@@ -129,7 +129,7 @@ This is the next.js app running on the digital ocean droplet using the domain po
 
 <h2>Points of Interest</h2>
 <ul>
-    <li><code>on: workflow_dispatch</code>: may be usefull during workflow development for manuall workflow run . go to workflow file on github. click 'View Runs' and then click 'Run workflow'</li>
+    <li><code>on: workflow_dispatch</code>: may be usefull during workflow development for manual workflow run . go to workflow file on github. click 'View Runs' and then click 'Run workflow'</li>
     <li>push to main trigger deploy, to protect this you can allow it only via pull request , this can be done via .git\hooks\pre-push (.git/hooks directory is not tracked by Git)
 
 ```bash
