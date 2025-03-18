@@ -1,29 +1,26 @@
 <h1>Project Name</h1>
-Deploy next.js app on a VPS using digital ocean droplet using github actions workflow
+Deploy next.js app on a VPS using github actions workflow
 
 
 
-<h2>Project Description</h2>
-....
+<h2>Description</h2>
+This repository provides a simple workflow file to deploy your Next.js application to a VPS when pushing to the main branch. I use a DigitalOcean Droplet as the VPS, but the workflow is compatible with other types of VPS as well
 
 <h2>Motivation</h2>
-i all ready have a solution for a simple CI\CD workflow which uses Github actions check <a href='#ref1'>[1]</a> but i have not used it with next.js. So here we will do it
+I already have a solution for a simple CI\CD workflow which uses Github actions check <a href='#ref1'>[1]</a> but i have not used it with next.js. So here we will do it
 
 <h2>Installation</h2>
 
 <h3>Production server</h3>
-check <a href='#ref2'>[2]</a>
+You need to setup the production server once as pre condition for success workflow. check <a href='#ref2'>[2]</a>
 
-
-<h3>Development</h3>
 
 
 <h3>CI\CD</h3>
 <ul>
-<li>copy the workflow file from <a href='#ref1'>[1]</a></li>
 <li>set VPS_IP ip and VPS_CICD_PRIVATE_KEY in the repo secrets part as in <a href='#ref1'>[1]</a></li>
-<li>tweak runs-on to fit your production server operating system version (change from ubuntu-latest to ubuntu-24.04 which best match y production server version which is ubuntu 24.10</li>
-<li>.env.production : tweak the workflow file to load the env variables ,currently we have
+<li>tweak <code>runs-on</code> to fit your production server operating system version (change from <code>ubuntu-latest</code> to <code>ubuntu-24.04</code> which best matches your production server version, which is Ubuntu 24.04)</li>
+<li>.env.production: tweak the workflow file to load the environment variables; currently, we have
 
 ```yml
       echo 'API_KEY_1=${{ secrets.API_KEY_1 }}' > $NEW_WORKING_FOLDER/.env.production
@@ -34,7 +31,15 @@ check <a href='#ref2'>[2]</a>
 
 
 <h2>Usage</h2>
-....
+<ul>
+  <li>Ensure the VPS is correctly set up with a production environment as described in the <a href="#ref2">Production Server</a> section.</li>
+  <li>Push changes to the main branch of your GitHub repository to automatically trigger the deployment workflow via GitHub Actions.</li>
+  <li>Verify that the <code>.env.production</code> file is generated and loaded with the necessary environment variables during the workflow execution.</li>
+  <li>Monitor the GitHub Actions logs to ensure the deployment process completes successfully.</li>
+  <li>Access the deployed Next.js application via the configured domain to verify its functionality.</li>
+  <li>To debug or manually redeploy, use the <code>workflow_dispatch</code> event to trigger the workflow directly in the GitHub Actions interface.</li>
+</ul>
+
 
 
 <h2>Technologies Used</h2>
@@ -45,7 +50,7 @@ check <a href='#ref2'>[2]</a>
   <li>Domain</li>
   <li>https</li>
   <li>Linux on VPS - Ubuntu</li>
-  <li>Digital Ocean - VPS provider via droplet</li>
+  <li>DigitalOcean - VPS provider using a droplet</li>
   <li>PM2</li>
 </ul>
 
@@ -64,37 +69,45 @@ check <a href='#ref2'>[2]</a>
   <li>Act</li>
 </ul>
 
-
 <h2>Design</h2>
 
-<h3>environment variables chalange</h3>
+<h3>Environment Variable Management</h3>
 
-I want the workflow to support .env.local file. It is supported by next.js out of the box in development mode and if you use vercel you need to load the content of .env.local to your project on vercel. But here i dont use vercel and its not development so what to do ??
+<p>A key challenge is securely managing environment variables for production. Next.js natively supports <code>.env.local</code> for development, and platforms like Vercel provide built-in variable management. However, for a VPS deployment, a different approach is needed.</p>
 
-<h3>Does next.js load local .env.local on production ?</h3>
-The answer is no , but it load .env.production.
+<p><strong>Problem:</strong> Next.js does not automatically load <code>.env.local</code> in production. While it does load <code>.env.production</code>, directly committing this file to the repository is a security risk, especially for sensitive data.</p>
 
-<h3>Bad solution</h3>
-next.js can load the .env.production file if it exist on the production server. But how he get there ? .env.local appears in .gitignore and you do want to remove it from there and expose it. This for sure is not recommended if the repo is public but even if the repo is private it is good practice to keep .env.local in .gitignore anyway
+<p><strong>Solution:</strong> Store the contents of <code>.env.production</code> as GitHub Actions secrets. During the deployment workflow, dynamically create the <code>.env.production</code> file on the VPS using these secrets. This ensures that sensitive information remains secure and is not exposed in the repository.</p>
 
-<h3>Good solution</h3>
-keep the content of the .env.production as github action secret variable and create the .env.production by the workflow
+<h3>Error Handling in GitHub Actions</h3>
 
-
-<h3>grep non zero exit code chalange</h3>
-Use
+<p>To control how GitHub Actions responds to non-zero exit codes (errors) in shell commands, you can use the following:</p>
 
 ```yml
-
 set +e
+# Commands that might fail but shouldn't stop the workflow
 ...
 set -e
-
+# Commands where failure should halt the workflow
 ```
 
-More info in <a href='#ref3'>[3]</a>
+<p>For more details, refer to <a href='#ref3'>[3]</a>.</p>
 
 <h2>Code Structure</h2>
+
+The workflow file is based on the one in <a href='#ref1'>[1]</a> with minor changes:
+
+<table> 
+<thead> 
+<tr> <th>Step</th> <th>Current Workflow</th> <th><a href='#ref1'>[1]</a> Workflow</th> </tr> 
+</thead> 
+<tbody> 
+<tr> <td>Runs-on Environment</td> <td>ubuntu-24.04</td> <td>ubuntu-latest</td> </tr> <tr> <td>Directory Variables</td> <td>HISTORY_WORKING_FOLDER</td> <td>OLD_WORKING_FOLDER</td> </tr>
+<tr> <td>PM2 Commands</td> <td>Uses pm2 directly (e.g., pm2 stop)</td> <td>Uses npx pm2 (e.g., npx pm2 stop)</td> </tr> 
+</tbody> 
+</table>
+
+Additionally, this workflow handles environment variables:
 
 ```yml
     - name: Create .env.production on VPS
@@ -104,13 +117,20 @@ More info in <a href='#ref3'>[3]</a>
         "
 ```
 
+
+
+
 <h2>Demo</h2>
-....
+This is the next.js app running on the digital ocean droplet using the domain post2youtube.xyz. I have used the an environment variable with six characters
+
+
+
+<img src='./figs/demo.png'/>
 
 <h2>Points of Interest</h2>
 <ul>
-    <li>on: workflow_dispatch  --> may be usefull during workflow development for manuall workflow run . go to workflow file on github. click 'View Runs' and then click 'Run workflow'</li>
-    <li>push to main trigegr deploy, to protect this you can allow it only via pull request , this can be done via .git\hooks\pre-push (.git/hooks directory is not tracked by Git)
+    <li><code>on: workflow_dispatch</code>: may be usefull during workflow development for manuall workflow run . go to workflow file on github. click 'View Runs' and then click 'Run workflow'</li>
+    <li>push to main trigger deploy, to protect this you can allow it only via pull request , this can be done via .git\hooks\pre-push (.git/hooks directory is not tracked by Git)
 
 ```bash
 #!/bin/bash
@@ -123,6 +143,7 @@ if [ "$branch_name" = "main" ]; then
 fi
 ```
   </li>
+  <li>I initially started with a 1 GB RAM droplet, but it couldn't handle the build process and reached 100% CPU usage. Upgrading the droplet to 2 GB RAM solved the issue</li>
 </ul>
 
 
