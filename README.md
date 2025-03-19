@@ -117,15 +117,17 @@ Additionally, this workflow handles environment variables:
         "
 ```
 
+  <h2>Demo</h2>
+  <p>
+    After your Next.js application is ready, you should push to the main branch and verify that the workflow completes successfully, as shown in the following image:
+  </p>
+  <img src="./figs/complete-success.png" alt="Workflow Complete Success" />
+  <p>
+    This is the Next.js app running on the DigitalOcean droplet using the domain <a href="https://post2youtube.xyz" target="_blank">post2youtube.xyz</a>. I have used an environment variable with six characters.
+  </p>
+  <img src="./figs/demo.png" alt="Next.js App Demo" />
 
 
-
-<h2>Demo</h2>
-This is the next.js app running on the digital ocean droplet using the domain post2youtube.xyz. I have used the an environment variable with six characters
-
-
-
-<img src='./figs/demo.png'/>
 
 <h2>Points of Interest</h2>
 <ul>
