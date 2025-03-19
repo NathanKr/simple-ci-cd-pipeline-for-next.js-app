@@ -10,6 +10,8 @@ This repository provides a simple workflow file to deploy your Next.js applicati
 I already have a simple CI/CD workflow using GitHub Actions (<a href='#ref1'>[1]</a>), but I haven't applied it to a Next.js project yet. This guide demonstrates how to do that
 
 <h2>Installation</h2>
+<p>Below are the installation instructions for setting up the production server and configuring CI/CD:</p>
+
 
 <h3>Production server</h3>
 You need to setup the production server once as pre condition for success workflow. check <a href='#ref2'>[2]</a>
@@ -41,8 +43,9 @@ You need to setup the production server once as pre condition for success workfl
 </ul>
 
 
-
 <h2>Technologies Used</h2>
+<p>The technologies used in this repository are listed below:</p>
+
 
 <h3>Production server</h3>
 <ul>
@@ -70,6 +73,9 @@ You need to setup the production server once as pre condition for success workfl
 </ul>
 
 <h2>Design</h2>
+<p>The design challenges I faced in this repository are listed below:</p>
+
+
 
 <h3>Environment Variable Management</h3>
 
